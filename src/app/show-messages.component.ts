@@ -3,7 +3,8 @@ import {MessagesService} from "./services/messages.service";
 import {
   MatAccordion,
   MatExpansionPanel,
-  MatExpansionPanelDescription, MatExpansionPanelHeader,
+  MatExpansionPanelDescription,
+  MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
 import {MatList, MatListItem} from "@angular/material/list";
@@ -31,14 +32,14 @@ import {MatIcon} from '@angular/material/icon';
             Messages de l'application
           </mat-panel-title>
           <mat-panel-description>
-            {{panelOpenState ? 'Cacher les messages' : 'Voir les messages'}}
+            {{ panelOpenState ? 'Cacher les messages' : 'Voir les messages' }}
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-list>
-          @for(msg of messages; track msg) {
+          @for (msg of messages; track msg) {
             <mat-list-item>
               <mat-icon>label</mat-icon>
-              <div matListItemLine>{{msg}}</div>
+              <div matListItemLine>{{ msg }}</div>
             </mat-list-item>
           }
 
@@ -52,7 +53,7 @@ export class ShowMessagesComponent {
 
   panelOpenState: boolean = false;
 
-  constructor(private messagesService: MessagesService) {
+  constructor(private readonly messagesService: MessagesService) {
   }
 
   get messages() {
