@@ -1,17 +1,8 @@
 <div class="container">
-  <mat-list class="custom-list">
-    @for (personne of personnes; track personne) {
-      <mat-list-item class="list-item">
-        <div class="person-info">
-          <h3 class="name">{{ personne.prenom }} {{ personne.nom }} | Dépenses : {{ personne.depenses.length }}</h3>
-        </div>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-    }
-  </mat-list>
+  <app-personnes-liste/>
 
   <router-outlet></router-outlet>
   @if (!messagesService.isEmpty()) {
-    <app-show-messages></app-show-messages>
+    <app-show-messages/>
   }
 </div>
