@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {Personne} from './personne'
+import {Datas} from './mock-datas';
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,10 @@ import {Personne} from './personne'
 })
 export class AppComponent {
   title = 'gestion-depenses';
+  personnes: Personne[];
+
+  constructor() {
+    const datas = Datas.getInstance();
+    this.personnes = datas.generePersonnes();
+  }
 }
