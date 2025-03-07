@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {Personne} from './personne'
 import {MessagesService} from './services/messages.service';
 import {ShowMessagesComponent} from './show-messages.component';
 import {PersonnesListeComponent} from './personnes-liste.component';
@@ -12,7 +11,6 @@ import {PersonnesListeComponent} from './personnes-liste.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  static personnes: Personne[];
   title = 'gestion-depenses';
 
   constructor(public messagesService: MessagesService) {

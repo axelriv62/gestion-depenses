@@ -1,7 +1,8 @@
 <div class="container">
   <app-personnes-liste/>
+
   <router-outlet></router-outlet>
   @if (!messagesService.isEmpty()) {
-    <app-show-messages></app-show-messages>
+    <app-show-messages/>
   }
 </div>
