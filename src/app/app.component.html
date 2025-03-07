@@ -1,3 +1,10 @@
+<main>
+  <ul>
+    @for(personne of personnes; track personne){
+      <li>{{personne.prenom + " "+personne.nom+" "+personne.depenses.length}}</li>
+    }
+  </ul>
+</main>
 
 
 <router-outlet />
