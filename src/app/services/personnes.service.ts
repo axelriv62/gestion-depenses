@@ -28,4 +28,9 @@ export class PersonnesService {
   totalDepenses(personne: Personne): number {
     return personne.depenses.reduce((somme, depense) => somme + depense.montant, 0);
   }
+
+  getPersonne(id: number): Personne {
+    return <Personne>this.personnes.find(personne => personne.id === id)
+  }
+
 }

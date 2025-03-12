@@ -8,6 +8,6 @@ export const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'personnes', component: PersonnesListeComponent},
-  {path: 'depenses', component: PersonnesDetailsComponent},
+  {path: 'personnes/:id', component: PersonnesDetailsComponent},
   {path: '**', component: PageNotFoundComponent}
 ];

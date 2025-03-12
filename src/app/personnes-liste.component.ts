@@ -28,8 +28,6 @@ import {NgClass} from '@angular/common';
     MatTable,
     MatTableModule,
     NgClass,
-
-
   ],
   template: `
     <button (click)="getPersonnes(0)">Trier par ID</button>

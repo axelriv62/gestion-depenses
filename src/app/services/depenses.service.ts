@@ -13,6 +13,6 @@ export class DepensesService {
   }
 
   getDepensesOfPersonneId(id: number): Depense[] {
-    return this.depenses.filter(depense => depense.id !== id);
+    return this.depenses.filter(depense => depense.idPersonne === id);
   }
 }
