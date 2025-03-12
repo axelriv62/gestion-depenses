@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Personne} from './personne';
 import {PersonnesService} from './services/personnes.service';
 import {MessagesService} from './services/messages.service';
@@ -88,10 +88,11 @@ import {NgClass} from '@angular/common';
   `
 })
 export class PersonnesListeComponent {
+  @ViewChild(MatTable) table!: MatTable<Personne>
   personnes: Personne[] = [];
   columns = ['id', 'nom', 'prenom', 'plafond', 'depenses', 'details'];
 
-  constructor(private personnesService: PersonnesService, private messagesService: MessagesService) {
+  constructor(private readonly personnesService: PersonnesService, private readonly messagesService: MessagesService) {
     this.personnes = personnesService.getPersonnes(0);
   }
 
@@ -105,7 +106,7 @@ export class PersonnesListeComponent {
     } else {
       this.messagesService.add('Tri par Nom (Z-A)');
     }
-    this
+    this.table.renderRows()
   }
 
   getTotalDepenses(personne: Personne): number {
