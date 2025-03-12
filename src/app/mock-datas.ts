@@ -17,6 +17,8 @@ export class Datas {
   }
 
   public generePersonnes(nb?: number): Personne[] {
+    Datas.idP = 1;
+    Datas.idD = 1;
     const personnes = [];
 
     if (!nb)

@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {MessagesService} from './services/messages.service';
 import {ShowMessagesComponent} from './show-messages.component';
-import {PersonnesListeComponent} from './personnes-liste.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ShowMessagesComponent, PersonnesListeComponent, MatToolbar, MatIcon, RouterLink],
+  imports: [RouterOutlet, ShowMessagesComponent, MatToolbar, MatIcon, RouterLink, MatButton],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
