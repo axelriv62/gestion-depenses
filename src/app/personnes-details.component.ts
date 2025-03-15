@@ -42,6 +42,12 @@ import {MessagesService} from './services/messages.service';
     <button (click)="getDepensesOfPersonneId(0)">Trier par date</button>
     <button (click)="getDepensesOfPersonneId(1)">Trier par montant (décroissant)</button>
     <button (click)="getDepensesOfPersonneId(2)">Trier par nature et montant</button>
+    <select (change)="filtreDepenses($event)">
+      <option value="">Toutes les natures</option>
+      @for (nature of natures; track nature) {
+        <option value="{{ nature }}">{{ nature }}</option>
+      }
+    </select>
     <table mat-table [dataSource]="depenses">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -76,6 +82,7 @@ export class PersonnesDetailsComponent {
   id: number;
   columns = ['id', 'dd', 'nature', 'libelle', 'montant'];
   depenses: Depense[] = [];
+  natures: string[] = ['Alimentaire', 'Loisirs', 'Voiture', 'Habitat', 'Sport', 'Vacances']
 
   constructor(private route: ActivatedRoute, private personnesService: PersonnesService, private depensesService: DepensesService, private messagesService: MessagesService) {
     this.id = +(this.route.snapshot.paramMap.get('id') || 1);
@@ -99,4 +106,14 @@ export class PersonnesDetailsComponent {
     this.table.renderRows()
   }
 
+  filtreDepenses(filtre: Event) {
+    this.depenses = this.depensesService.getDepensesOfPersonneId(this.id);
+    this.messagesService.clear()
+    let nature = (filtre.target as HTMLSelectElement).value;
+    if (nature) {
+      this.depenses = this.depenses.filter(depense => depense.nature === nature);
+      this.messagesService.add('Filtre sur la nature ' + nature);
+    }
+    this.table.renderRows();
+  }
 }
