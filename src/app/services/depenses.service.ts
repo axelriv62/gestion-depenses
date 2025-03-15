@@ -24,4 +24,11 @@ export class DepensesService {
       return depenses;
     }
   }
+
+  filtreDepenses(id: number, nature: string): Depense[] {
+    if (nature !== '') {
+      return this.getDepensesOfPersonneId(id).filter(depense => depense.nature === nature);
+    }
+    return this.getDepensesOfPersonneId(id);
+  }
 }

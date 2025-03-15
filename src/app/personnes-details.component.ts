@@ -96,6 +96,7 @@ export class PersonnesDetailsComponent {
   getDepensesOfPersonneId(sort?: number) {
     this.depenses = this.depensesService.getDepensesOfPersonneId(this.id, sort);
     this.messagesService.clear()
+    this.table.renderRows()
     if (sort == 0) {
       this.messagesService.add('Tri par date');
     } else if (sort == 1) {
@@ -103,17 +104,15 @@ export class PersonnesDetailsComponent {
     } else {
       this.messagesService.add('Tri par nature et montant');
     }
-    this.table.renderRows()
   }
 
   filtreDepenses(filtre: Event) {
-    this.depenses = this.depensesService.getDepensesOfPersonneId(this.id);
-    this.messagesService.clear()
     let nature = (filtre.target as HTMLSelectElement).value;
-    if (nature) {
-      this.depenses = this.depenses.filter(depense => depense.nature === nature);
-      this.messagesService.add('Filtre sur la nature ' + nature);
+    this.depenses = this.depensesService.filtreDepenses(this.id, nature);
+    this.messagesService.clear()
+    this.table.renderRows()
+    if (nature !== '') {
+      this.messagesService.add('Filtre par nature : ' + nature);
     }
-    this.table.renderRows();
   }
 }

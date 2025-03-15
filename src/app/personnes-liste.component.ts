@@ -81,6 +81,7 @@ export class PersonnesListeComponent {
 
   getPersonnes(sort: number) {
     this.personnes = this.personnesService.getPersonnes(sort);
+    this.table.renderRows()
     this.messagesService.clear()
     if (sort == 0) {
       this.messagesService.add('Tri par ID');
@@ -89,7 +90,6 @@ export class PersonnesListeComponent {
     } else {
       this.messagesService.add('Tri par Nom (Z-A)');
     }
-    this.table.renderRows()
   }
 
   getTotalDepenses(personne: Personne): number {
