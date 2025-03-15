@@ -31,7 +31,7 @@ import {NgClass} from '@angular/common';
   ],
   template: `
     <button (click)="getPersonnes(0)">Trier par ID</button>
-    <button (click)="getPersonnes(1)">Trier par Nom (A-Z)</button>
+    <button (click)="getPersonnes(1)">Trier par nom (A-Z)</button>
     <button (click)="getPersonnes(2)">Trier par Nom (Z-A)</button>
     <table mat-table [dataSource]="personnes">
       <ng-container matColumnDef="id">
@@ -68,22 +68,7 @@ import {NgClass} from '@angular/common';
 
     </table>
   `,
-  styles: `
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-
-    button {
-      margin-bottom: 10px;
-    }
-  `
+  styles: ``
 })
 export class PersonnesListeComponent {
   @ViewChild(MatTable) table!: MatTable<Personne>
