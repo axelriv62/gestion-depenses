@@ -1,18 +1,22 @@
 <div class="container">
-  <p>
-    <mat-toolbar color="primary">
-      <span>Gestion dépenses</span>
-      <button [routerLink]="['/dashboard']" aria-label="dashboard" mat-button>
-        <mat-icon>home</mat-icon>
-        Accueil
-      </button>
-      <span class="groupe-droit"></span>
-      <button [routerLink]="['/personnes']" aria-label="List icon" mat-button>
-        <mat-icon>list</mat-icon>
-        Liste
-      </button>
-    </mat-toolbar>
-  </p>
+  <mat-toolbar color="primary">
+    <span>Gestion dépenses</span>
+    <button [routerLink]="['/dashboard']" aria-label="dashboard" mat-raised-button routerLinkActive="mat-accent">
+      <mat-icon>home</mat-icon>
+      Accueil
+    </button>
+    <span class="groupe-droit"></span>
+    <button [queryParams]="{horsLimite:'true'}" [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button
+            routerLinkActive="mat-accent">
+      <mat-icon>list</mat-icon>
+      Hors limite
+    </button>
+    <button [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+      <mat-icon>list</mat-icon>
+      Liste
+    </button>
+  </mat-toolbar>
+
   <router-outlet></router-outlet>
   @if (!messagesService.isEmpty()) {
     <app-show-messages/>

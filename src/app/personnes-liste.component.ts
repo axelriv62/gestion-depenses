@@ -3,7 +3,7 @@ import {Personne} from './personne';
 import {PersonnesService} from './services/personnes.service';
 import {MessagesService} from './services/messages.service';
 import {MatIcon} from '@angular/material/icon';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {
   MatCell,
   MatCellDef,
@@ -14,6 +14,7 @@ import {
   MatTableModule
 } from '@angular/material/table';
 import {NgClass} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-personnes-liste',
@@ -74,13 +75,28 @@ export class PersonnesListeComponent {
   @ViewChild(MatTable) table!: MatTable<Personne>
   personnes: Personne[] = [];
   columns = ['id', 'nom', 'prenom', 'plafond', 'depenses', 'details'];
+  horsLimite: boolean = false;
+  queryParamSubscription!: Subscription;
 
-  constructor(private readonly personnesService: PersonnesService, private readonly messagesService: MessagesService) {
-    this.personnes = personnesService.getPersonnes(0);
+  constructor(private readonly personnesService: PersonnesService, private readonly messagesService: MessagesService, private readonly route: ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    this.queryParamSubscription = this.route.queryParamMap.subscribe(params => {
+      this.horsLimite = params.get('horsLimite') === 'true';
+      this.getPersonnes(0);
+    });
+  }
+
+  ngOnDestroy() {
+    this.queryParamSubscription.unsubscribe();
   }
 
   getPersonnes(sort: number) {
     this.personnes = this.personnesService.getPersonnes(sort);
+    if (this.horsLimite) {
+      this.personnes = this.personnes.filter(personne => this.isOverPlafond(personne));
+    }
     this.table.renderRows()
     this.messagesService.clear()
     if (sort == 0) {
