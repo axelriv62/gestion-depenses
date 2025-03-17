@@ -7,9 +7,20 @@ import {NgOptimizedImage} from '@angular/common';
     NgOptimizedImage
   ],
   template: `
-    <img ngSrc="/antoine.png" alt="Antoine" height="261" width="396">
+    <div class="image-container">
+      <img ngSrc="/antoine.png" alt="Antoine" height="261" width="396">
+    </div>
   `,
-  styles: ``
+  styles: [`
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+    }
+
+  `]
 })
 export class DashboardComponent {
 

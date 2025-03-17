@@ -3,8 +3,6 @@ import {Personne} from './personne';
 
 export class Datas {
   private static instance: Datas;
-  private static idP = 1;
-  private static idD = 1;
 
   private constructor() {
   }
@@ -17,12 +15,14 @@ export class Datas {
   }
 
   public generePersonnes(nb?: number): Personne[] {
+    let idP: number = 1;
+    let idD: number = 1;
     const personnes = [];
 
     if (!nb)
       nb = 10;
     for (let i = 0; i < nb; i++) {
-      let idPersonne = Datas.idP++;
+      let idPersonne = idP++;
       const nbDepenses = faker.number.int({min: 10, max: 20});
       const tabDep = [];
       for (let j = 0; j < nbDepenses; j++) {
@@ -31,7 +31,7 @@ export class Datas {
           dd: faker.date.between({from: '2019-01-01', to: '2019-12-31'}),
           libelle: faker.hacker.phrase(),
           montant: +faker.finance.amount({min: 100, max: 750, dec: 2}),
-          id: Datas.idD++,
+          id: idD++,
           idPersonne: idPersonne,
         };
         tabDep.push(dep);
