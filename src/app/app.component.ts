@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {MessagesService} from './services/messages.service';
-import {ShowMessagesComponent} from './show-messages.component';
+import {ShowMessagesComponent} from './components/show-messages/show-messages.component';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
