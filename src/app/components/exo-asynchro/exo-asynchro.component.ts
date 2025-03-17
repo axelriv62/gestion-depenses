@@ -21,13 +21,17 @@ export class ExoAsynchroComponent implements OnInit {
     console.log(result);
   }
 
-  fetchData(): Promise<string> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("Data récupérées sur le serveur");
-      }, 2000);
-    });
+  fetchData() {
+    setTimeout(() => {
+      const isSuccess = Math.random() > 0.8;
+      if (isSuccess) {
+        console.log("Données récupérées avec succès !");
+      } else {
+        console.log("Échec de la récupération des données.");
+      }
+    }, 2000);
   }
+
 
   async getData() {
     console.log("Récupération des données...");
