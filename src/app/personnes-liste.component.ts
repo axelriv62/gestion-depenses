@@ -1,66 +1,103 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Personne} from './personne';
 import {PersonnesService} from './services/personnes.service';
 import {MessagesService} from './services/messages.service';
+import {MatIcon} from '@angular/material/icon';
+import {ActivatedRoute, RouterLink} from '@angular/router';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatTable,
+  MatTableModule
+} from '@angular/material/table';
+import {NgClass} from '@angular/common';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-personnes-liste',
-  imports: [],
+  imports: [
+    MatIcon,
+    RouterLink,
+    MatHeaderCell,
+    MatCell,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatColumnDef,
+    MatTable,
+    MatTableModule,
+    NgClass,
+  ],
   template: `
-    <div>
-      <button (click)="getPersonnes(0)">Trier par ID</button>
-      <button (click)="getPersonnes(1)">Trier par Nom (A-Z)</button>
-      <button (click)="getPersonnes(2)">Trier par Nom (Z-A)</button>
-      <table>
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Plafond</th>
-          <th>Dépenses</th>
-        </tr>
-        </thead>
-        <tbody>
-          @for (personne of personnes; track personne.id) {
-            <tr>
-              <td>{{ personne.id }}</td>
-              <td>{{ personne.nom }}</td>
-              <td>{{ personne.prenom }}</td>
-              <td>{{ personne.plafond }}</td>
-              <td>{{ getTotalDepenses(personne) }}</td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+    <button (click)="getPersonnes(0)">Trier par ID</button>
+    <button (click)="getPersonnes(1)">Trier par nom (A-Z)</button>
+    <button (click)="getPersonnes(2)">Trier par Nom (Z-A)</button>
+    <table mat-table [dataSource]="personnes">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let personne">{{ personne.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let personne">{{ personne.nom }}</td>
+      </ng-container>
+      <ng-container matColumnDef="prenom">
+        <th mat-header-cell *matHeaderCellDef>Prénom</th>
+        <td mat-cell *matCellDef="let personne">{{ personne.prenom }}</td>
+      </ng-container>
+      <ng-container matColumnDef="plafond">
+        <th mat-header-cell *matHeaderCellDef>Plafond</th>
+        <td mat-cell *matCellDef="let personne">{{ personne.plafond }}</td>
+      </ng-container>
+      <ng-container matColumnDef="depenses">
+        <th mat-header-cell *matHeaderCellDef>Dépenses</th>
+        <td mat-cell *matCellDef="let personne"
+            [ngClass]="{'rouge': isOverPlafond(personne)}">{{ getTotalDepenses(personne) }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="details">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon [routerLink]="['/personnes', element.id]">loupe</mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columns"></tr>
+      <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+    </table>
   `,
-  styles: `
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid black;
-      padding: 8px;
-      text-align: left;
-    }
-
-    button {
-      margin-bottom: 10px;
-    }
-  `
+  styles: ``
 })
 export class PersonnesListeComponent {
+  @ViewChild(MatTable) table!: MatTable<Personne>
   personnes: Personne[] = [];
+  columns = ['id', 'nom', 'prenom', 'plafond', 'depenses', 'details'];
+  horsLimite: boolean = false;
+  queryParamSubscription!: Subscription;
 
-  constructor(private personnesService: PersonnesService, private messagesService: MessagesService) {
-    this.personnes = personnesService.getPersonnes(0);
+  constructor(private readonly personnesService: PersonnesService, private readonly messagesService: MessagesService, private readonly route: ActivatedRoute) {
+  }
+
+  ngOnInit() {
+    this.queryParamSubscription = this.route.queryParamMap.subscribe(params => {
+      this.horsLimite = params.get('horsLimite') === 'true';
+      this.getPersonnes(0);
+    });
+  }
+
+  ngOnDestroy() {
+    this.queryParamSubscription.unsubscribe();
   }
 
   getPersonnes(sort: number) {
     this.personnes = this.personnesService.getPersonnes(sort);
+    if (this.horsLimite) {
+      this.personnes = this.personnes.filter(personne => this.isOverPlafond(personne));
+    }
+    this.table.renderRows()
     this.messagesService.clear()
     if (sort == 0) {
       this.messagesService.add('Tri par ID');
@@ -73,6 +110,10 @@ export class PersonnesListeComponent {
 
   getTotalDepenses(personne: Personne): number {
     return this.personnesService.totalDepenses(personne);
+  }
+
+  isOverPlafond(personne: Personne): boolean {
+    return this.personnesService.totalDepenses(personne) > personne.plafond;
   }
 
 }
