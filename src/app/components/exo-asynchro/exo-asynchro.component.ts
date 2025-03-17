@@ -9,7 +9,7 @@ import {Component, OnInit} from '@angular/core';
 export class ExoAsynchroComponent implements OnInit {
 
   ngOnInit(): void {
-    this.callMyFunction();
+    this.getData();
   }
 
   async myFunction(): Promise<string> {
@@ -21,4 +21,18 @@ export class ExoAsynchroComponent implements OnInit {
     console.log(result);
   }
 
+  fetchData(): Promise<string> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("Data récupérées sur le serveur");
+      }, 2000);
+    });
+  }
+
+  async getData() {
+    console.log("Récupération des données...");
+    const data = await this.fetchData();
+    console.log(data);
+    console.log("Données récupérées");
+  }
 }
