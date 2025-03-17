@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {PageNotFoundComponent} from './page-not-found.component';
+import {PageNotFoundComponent} from './components/page-not-found.component';
 import {PersonnesListeComponent} from './components/personnes-liste/personnes-liste.component';
 import {PersonnesDetailsComponent} from './components/personnes-details/personnes-details.component';
 
