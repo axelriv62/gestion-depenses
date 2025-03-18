@@ -34,6 +34,7 @@ import {MessagesService} from '../../services/messages.service';
     MatRowDef
   ],
   templateUrl: './personnes-details.component.html',
+  standalone: true,
   styleUrl: './personnes-details.component.css'
 })
 export class PersonnesDetailsComponent {
@@ -43,8 +44,8 @@ export class PersonnesDetailsComponent {
   depenses: Depense[] = [];
   natures: string[] = ['Alimentaire', 'Loisirs', 'Voiture', 'Habitat', 'Sport', 'Vacances']
 
-  constructor(private route: ActivatedRoute, private personnesService: PersonnesService, private depensesService: DepensesService, private messagesService: MessagesService) {
-    this.id = +(this.route.snapshot.paramMap.get('id') || 1);
+  constructor(private readonly route: ActivatedRoute, private readonly personnesService: PersonnesService, private readonly depensesService: DepensesService, private readonly messagesService: MessagesService) {
+    this.id = +(this.route.snapshot.paramMap.get('id') ?? 1);
     this.depenses = depensesService.getDepensesOfPersonneId(this.id);
   }
 

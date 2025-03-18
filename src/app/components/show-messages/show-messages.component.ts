@@ -23,6 +23,7 @@ import {MatIcon} from '@angular/material/icon';
     MatIcon
   ],
   templateUrl: './show-messages.component.html',
+  standalone: true,
   styleUrl: './show-messages.component.css'
 })
 export class ShowMessagesComponent {
