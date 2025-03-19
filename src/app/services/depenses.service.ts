@@ -8,7 +8,7 @@ import {PersonnesService} from './personnes.service';
 export class DepensesService {
   depenses: Depense[] = [];
 
-  constructor(private personnesService: PersonnesService) {
+  constructor(private readonly personnesService: PersonnesService) {
     this.personnesService.getPersonnes(0).forEach(p => this.depenses.push(...p.depenses));
   }
 

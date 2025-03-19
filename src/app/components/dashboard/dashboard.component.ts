@@ -7,6 +7,7 @@ import {NgOptimizedImage} from '@angular/common';
     NgOptimizedImage
   ],
   templateUrl: './dashboard.component.html',
+  standalone: true,
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
