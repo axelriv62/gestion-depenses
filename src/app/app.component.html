@@ -5,6 +5,10 @@
       <mat-icon>home</mat-icon>
       Accueil
     </button>
+    <button [routerLink]="['/fomulaire']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+      <mat-icon>list_alt</mat-icon>
+      Formulaire
+    </button>
     <span class="groupe-droit"></span>
     <button [queryParams]="{horsLimite:'true'}" [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button
             routerLinkActive="mat-accent">
