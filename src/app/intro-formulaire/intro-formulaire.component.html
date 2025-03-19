@@ -1,0 +1,12 @@
+<div class="container">
+  <form [formGroup]="formulaire">
+    <mat-form-field>
+      <input formControlName="numeroTelCtrl" matInput placeholder="Numéro de téléphone"
+             type="text">
+    </mat-form-field>
+  </form>
+  <div>
+    valeur saisie : {{ numeroTelCtrl?.value }}
+  </div>
+</div>
+
