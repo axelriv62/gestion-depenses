@@ -9,6 +9,10 @@
       <mat-icon>list_alt</mat-icon>
       Formulaire
     </button>
+    <button [routerLink]="['/personne-form']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+      <mat-icon>assignment_ind</mat-icon>
+      Formulaire Personne
+    </button>
     <span class="groupe-droit"></span>
     <button [queryParams]="{horsLimite:'true'}" [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button
             routerLinkActive="mat-accent">
