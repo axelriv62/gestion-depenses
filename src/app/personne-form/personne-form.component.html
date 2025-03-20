@@ -1,5 +1,5 @@
 <div class="container">
-  <form [formGroup]="formulaire">
+  <form (ngSubmit)="onSubmit()" [formGroup]="formulaire">
     <div class="ligne">
       <mat-form-field>
         <input formControlName="nom" matInput placeholder="Nom" type="text">
@@ -22,6 +22,9 @@
           }
         </mat-select>
       </mat-form-field>
+    </div>
+    <div class="ligne">
+      <button color="primary" mat-raised-button type="submit">Valider</button>
     </div>
   </form>
   <div>

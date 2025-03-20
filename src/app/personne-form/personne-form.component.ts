@@ -4,6 +4,7 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {JsonPipe} from '@angular/common';
 import {MatInput} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
 
 interface Specialite {
   valeur: string;
@@ -20,7 +21,8 @@ interface Specialite {
     MatOption,
     MatLabel,
     JsonPipe,
-    MatInput
+    MatInput,
+    MatButton
   ],
   templateUrl: './personne-form.component.html',
   styleUrl: './personne-form.component.css'
@@ -46,5 +48,9 @@ export class PersonneFormComponent {
 
   get numeroTelCtrl(): AbstractControl | null {
     return this.formulaire.get('numeroTelCtrl');
+  }
+
+  onSubmit() {
+    console.info(this.formulaire.value);
   }
 }
