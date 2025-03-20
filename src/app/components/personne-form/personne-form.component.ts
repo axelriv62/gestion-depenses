@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {JsonPipe} from '@angular/common';
@@ -29,7 +29,7 @@ interface Specialite {
 })
 export class PersonneFormComponent {
   formulaire = new FormGroup({
-    nom: new FormControl(''),
+    nom: new FormControl('', [Validators.required, Validators.minLength(4)]),
     prenom: new FormControl(''),
     numeroTelCtrl: new FormControl(''),
     specialite: new FormControl('')
@@ -48,6 +48,10 @@ export class PersonneFormComponent {
 
   get numeroTelCtrl(): AbstractControl | null {
     return this.formulaire.get('numeroTelCtrl');
+  }
+
+  get nom() {
+    return this.formulaire.get('nom');
   }
 
   onSubmit() {
