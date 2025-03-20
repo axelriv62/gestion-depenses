@@ -1,1 +1,31 @@
-<p>personne-form works!</p>
+<div class="container">
+  <form [formGroup]="formulaire">
+    <div class="ligne">
+      <mat-form-field>
+        <input formControlName="nom" matInput placeholder="Nom" type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <input formControlName="prenom" matInput placeholder="Prénom" type="text">
+      </mat-form-field>
+    </div>
+    <div class="ligne">
+      <mat-form-field>
+        <input formControlName="numeroTelCtrl" matInput placeholder="Numéro de téléphone" type="text">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Spécialité</mat-label>
+        <mat-select formControlName="specialite">
+          @for (specialite of specialites; track specialite.valeur) {
+            <mat-option [value]="specialite.valeur">
+              {{ specialite.libelle }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+  <div>
+    valeurs : {{ formulaire?.value | json }}
+  </div>
+
+</div>

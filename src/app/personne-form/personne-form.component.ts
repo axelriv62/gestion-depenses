@@ -1,5 +1,9 @@
 import {Component} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {JsonPipe} from '@angular/common';
+import {MatInput} from '@angular/material/input';
 
 interface Specialite {
   valeur: string;
@@ -10,7 +14,13 @@ interface Specialite {
   selector: 'app-intro-formulaire',
   standalone: true,
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    MatLabel,
+    JsonPipe,
+    MatInput
   ],
   templateUrl: './personne-form.component.html',
   styleUrl: './personne-form.component.css'
