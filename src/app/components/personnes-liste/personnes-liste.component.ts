@@ -45,10 +45,8 @@ export class PersonnesListeComponent implements OnInit, OnDestroy {
   constructor(private readonly personnesService: PersonnesService, private readonly messagesService: MessagesService, private readonly route: ActivatedRoute) {
   }
 
-  // comme dans le sujet
   ngOnInit() {
     this.queryParamSubscription = this.route.queryParamMap.subscribe(params => {
-      console.log("appel de ngOnInit dans le composant personnes-liste");
       this.horsLimite = params.get('horsLimite') === 'true';
       this.getPersonnes(0).then(noop)
     });
@@ -58,13 +56,9 @@ export class PersonnesListeComponent implements OnInit, OnDestroy {
     this.queryParamSubscription.unsubscribe();
   }
 
-  // comme dans le sujet
   async getPersonnes(sort: number) {
-    console.log("appel de getPersonnes dans le composant personnes-liste");
-
     try {
       let personnes = await this.personnesService.getPersonnes(sort);
-      console.log("let personnes : " + personnes);
 
       for (const personne of personnes) {
         this.totalDepensesCache[personne.id] = await this.getTotalDepenses(personne);
@@ -73,13 +67,11 @@ export class PersonnesListeComponent implements OnInit, OnDestroy {
 
       if (this.horsLimite) {
         personnes = personnes.filter(personne => this.isOverPlafondCache[personne.id]);
-        console.log("personnes filter : " + personnes);
         this.table.renderRows()
       }
 
       this.personnes.set(personnes);
 
-      this.messagesService.clear()
       if (sort == 0) {
         this.messagesService.add('Tri par ID');
       } else if (sort == 1) {
@@ -89,29 +81,37 @@ export class PersonnesListeComponent implements OnInit, OnDestroy {
       }
 
     } catch (error) {
-      this.messagesService.add("Erreur lors du chargement des personnes:" + error);
+      this.messagesService.add("Erreur lors du chargement des personnes");
     }
   }
 
   async getTotalDepenses(personne: Personne): Promise<number> {
-    console.log("appel de getTotalDepenses dans le composant personnes-liste pour la personne " + personne.id);
     if (this.totalDepensesCache[personne.id] !== undefined) {
       return this.totalDepensesCache[personne.id];
     }
-    const total = await this.personnesService.totalDepenses(personne);
-    this.totalDepensesCache[personne.id] = total;
-    return total;
+    try {
+      const total = await this.personnesService.totalDepenses(personne);
+      this.totalDepensesCache[personne.id] = total;
+      return total;
+    } catch (error) {
+      this.messagesService.add("Erreur lors du calcul du total des dépenses de la personne " + personne.nom);
+      return -1;
+    }
   }
 
   async isOverPlafond(personne: Personne): Promise<boolean> {
-    console.log("appel de isOverPlafond dans le composant personnes-liste pour la personne " + personne.id);
     if (this.isOverPlafondCache[personne.id] !== undefined) {
       return this.isOverPlafondCache[personne.id];
     }
-    const totalDepenses = await this.getTotalDepenses(personne);
-    const isOver = totalDepenses > personne.plafond;
-    this.isOverPlafondCache[personne.id] = isOver;
-    return isOver;
+    try {
+      const totalDepenses = await this.getTotalDepenses(personne);
+      const isOver = totalDepenses > personne.plafond;
+      this.isOverPlafondCache[personne.id] = isOver;
+      return isOver;
+    } catch (error) {
+      this.messagesService.add("Erreur lors du calcul du plafond de la personne : " + personne.nom);
+      return false;
+    }
   }
 
 }

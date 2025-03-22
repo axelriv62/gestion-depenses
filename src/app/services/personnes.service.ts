@@ -29,9 +29,7 @@ export class PersonnesService {
   constructor(private http: HttpClient, private messageService: MessagesService, private depensesService: DepensesService) {
   }
 
-  // comme dans le sujet
   async getPersonnes(sort: number): Promise<Personne[]> {
-    console.log("appel de getPersonnes dans le service personnes");
     const personnes$ = this.http.get<GetPersonnesResponse>(`${this.url}/personnes`, this.httpOptions);
     const response = await firstValueFrom(personnes$);
 
@@ -47,17 +45,13 @@ export class PersonnesService {
   }
 
   async totalDepenses(personne: Personne): Promise<number> {
-    console.log("appel de totalDepenses dans le service personnes pour la personne " + personne.id);
     const depenses = await this.depensesService.getDepensesOfPersonneId(personne.id, 0);
     return depenses.reduce((acc, depense) => acc + depense.montant, 0);
   }
 
   async getPersonne(id: number): Promise<Personne> {
-    console.log("appel de getPersonne dans le service personnes pour la personne " + id);
     const personne$ = this.http.get<GetPersonneResponse>(`${this.url}/personnes/${id}`, this.httpOptions);
-    console.log("personnes$ : " + await personne$.forEach(personne => console.log(personne)));
     const response = await firstValueFrom(personne$);
-    console.log("response : " + response.data.personne);
     return response.data.personne;
   }
 }

@@ -22,7 +22,6 @@ export class DepensesService {
   }
 
   async getDepensesOfPersonneId(id: number, sort: number): Promise<Depense[]> {
-    console.log("appel de getDepensesOfPersonneId dans le service depenses pour la personne " + id);
     const depenses$ = this.http.get<GetDepensesResponse>(`${this.url}/depenses/personne/${id}`, this.httpOptions);
     const response = await firstValueFrom(depenses$);
 
