@@ -11,6 +11,12 @@ export type GetPersonnesResponse = {
   }
 }
 
+export type GetPersonneResponse = {
+  data: {
+    personne: Personne;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -48,7 +54,10 @@ export class PersonnesService {
 
   async getPersonne(id: number): Promise<Personne> {
     console.log("appel de getPersonne dans le service personnes pour la personne " + id);
-    const personne$ = this.http.get<Personne>(`${this.url}/personnes/${id}`, this.httpOptions);
-    return await firstValueFrom(personne$);
+    const personne$ = this.http.get<GetPersonneResponse>(`${this.url}/personnes/${id}`, this.httpOptions);
+    console.log("personnes$ : " + await personne$.forEach(personne => console.log(personne)));
+    const response = await firstValueFrom(personne$);
+    console.log("response : " + response.data.personne);
+    return response.data.personne;
   }
 }
