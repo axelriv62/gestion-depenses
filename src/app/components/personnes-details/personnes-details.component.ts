@@ -50,23 +50,22 @@ export class PersonnesDetailsComponent {
   }
 
   ngOnInit() {
-    console.log("appel de ngOnInit dans le composant personnes-details pour la personne " + this.id);
     this.getPersonne().then(() => this.getDepensesOfPersonneId(0))
   }
 
   async getPersonne() {
-    console.log("appel de getPersonne dans le composant personnes-details pour la personne " + this.id);
-    this.personne = await this.personnesService.getPersonne(this.id)
+    try {
+      this.personne = await this.personnesService.getPersonne(this.id)
+    } catch (error) {
+      this.messagesService.add("Erreur lors du chargement de la personne avec l'id " + this.id);
+    }
   }
 
   async getDepensesOfPersonneId(sort: number) {
-    console.log("appel de getDepensesOfPersonneId dans le composant personnes-details pour la personne " + this.id);
-
     try {
       const depenses = await this.depensesService.getDepensesOfPersonneId(this.id, sort);
       this.depenses.set(depenses)
 
-      this.messagesService.clear()
       if (sort == 0) {
         this.messagesService.add('Tri par date');
       } else if (sort == 1) {
@@ -76,17 +75,20 @@ export class PersonnesDetailsComponent {
       }
 
     } catch (error) {
-      this.messagesService.add("Erreur lors du chargement des dépenses:" + error);
+      this.messagesService.add("Erreur lors du chargement des dépenses de la personne avec l'id " + this.id);
     }
   }
 
   async filtreDepenses(filtre: Event) {
     let nature = (filtre.target as HTMLSelectElement).value;
-    this.depenses.set(await this.depensesService.filtreDepenses(this.id, nature));
-    this.messagesService.clear()
-    this.table.renderRows()
-    if (nature !== '') {
-      this.messagesService.add('Filtre par nature : ' + nature);
+    try {
+      this.depenses.set(await this.depensesService.filtreDepenses(this.id, nature));
+      this.table.renderRows()
+      if (nature !== '') {
+        this.messagesService.add('Filtre par nature : ' + nature);
+      }
+    } catch (error) {
+      this.messagesService.add("Erreur lors du filtrage des dépenses de la personne avec l'id " + this.id);
     }
   }
 }
