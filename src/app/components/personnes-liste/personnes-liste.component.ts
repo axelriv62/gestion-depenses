@@ -64,15 +64,17 @@ export class PersonnesListeComponent implements OnInit, OnDestroy {
 
     try {
       let personnes = await this.personnesService.getPersonnes(sort);
-
-      if (this.horsLimite) {
-        personnes = personnes.filter(personne => this.isOverPlafondCache[personne.id]);
-        this.table.renderRows()
-      }
+      console.log("let personnes : " + personnes);
 
       for (const personne of personnes) {
         this.totalDepensesCache[personne.id] = await this.getTotalDepenses(personne);
         this.isOverPlafondCache[personne.id] = await this.isOverPlafond(personne);
+      }
+
+      if (this.horsLimite) {
+        personnes = personnes.filter(personne => this.isOverPlafondCache[personne.id]);
+        console.log("personnes filter : " + personnes);
+        this.table.renderRows()
       }
 
       this.personnes.set(personnes);
