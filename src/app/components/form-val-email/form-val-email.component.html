@@ -1,1 +1,30 @@
-<p>form-val-email works!</p>
+<div class="container">
+  <form [formGroup]="formulaire">
+    <mat-form-field>
+      <input formControlName="email"
+             matInput
+             placeholder="Adresse Mail">
+    </mat-form-field>
+    <div class="ligne">
+      <div class="ligne">champ email valide ?</div>
+    </div>
+    <div class="ligne">
+      <div [class]="email?.valid ? 'ok' : 'erreur'" class="p-col">email.valid</div>
+      <div [class]="email?.invalid ? 'ok' : 'erreur'" class="p-col">email.invalid</div>
+    </div>
+
+    <div class="ligne">champ email visité ?</div>
+
+    <div class="ligne">
+      <div [class]="email?.touched ? 'ok' : 'erreur'" class="p-col">email.touched</div>
+      <div [class]="email?.untouched ? 'ok' : 'erreur'" class="p-col">email.untouched</div>
+    </div>
+
+    <div class="ligne">champ email changé ?</div>
+
+    <div class="ligne">
+      <div [class]="email?.dirty ? 'ok' : 'erreur'" class="p-col">email.dirty</div>
+      <div [class]="email?.pristine ? 'ok' : 'erreur'" class="p-col">email.pristine</div>
+    </div>
+  </form>
+</div>
