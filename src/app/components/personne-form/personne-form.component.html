@@ -1,8 +1,18 @@
 <div class="container">
   <form (ngSubmit)="onSubmit()" [formGroup]="formulaire">
-    <div class="ligne">
+    <div class="p-formgroup-inline">
       <mat-form-field>
         <input formControlName="nom" matInput placeholder="Nom" type="text">
+        @if (nom?.errors?.['required'] && (nom?.dirty || nom?.touched)) {
+          <mat-error>
+            Le nom est obligatoire
+          </mat-error>
+        }
+        @if (nom?.errors?.['minlength']) {
+          <mat-error>
+            Le nom doit comporter au moins 6 caractères
+          </mat-error>
+        }
       </mat-form-field>
       <mat-form-field>
         <input formControlName="prenom" matInput placeholder="Prénom" type="text">
@@ -24,7 +34,7 @@
       </mat-form-field>
     </div>
     <div class="ligne">
-      <button color="primary" mat-raised-button type="submit">Valider</button>
+      <button [disabled]="formulaire.invalid" color="primary" mat-raised-button type="submit">Valider</button>
     </div>
   </form>
   <div>

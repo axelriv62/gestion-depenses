@@ -4,8 +4,8 @@ import {PageNotFoundComponent} from './components/page-not-found.component';
 import {PersonnesListeComponent} from './components/personnes-liste/personnes-liste.component';
 import {PersonnesDetailsComponent} from './components/personnes-details/personnes-details.component';
 import {ExoAsynchroComponent} from './components/exo-asynchro/exo-asynchro.component';
-import {IntroFormulaireComponent} from './intro-formulaire/intro-formulaire.component';
-import {PersonneFormComponent} from './personne-form/personne-form.component';
+import {IntroFormulaireComponent} from './components/intro-formulaire/intro-formulaire.component';
+import {PersonneFormComponent} from './components/personne-form/personne-form.component';
 
 
 export const routes: Routes = [
