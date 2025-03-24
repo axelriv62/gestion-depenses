@@ -5,13 +5,19 @@
       <mat-icon>home</mat-icon>
       Accueil
     </button>
-    <button [routerLink]="['/formulaire']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+    <button [routerLink]="['/formulaire']" aria-label="Formulaire" mat-raised-button routerLinkActive="mat-accent">
       <mat-icon>list_alt</mat-icon>
       Formulaire
     </button>
-    <button [routerLink]="['/personne-form']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+    <button [routerLink]="['/personne-form']" aria-label="Formulaire personnes" mat-raised-button
+            routerLinkActive="mat-accent">
       <mat-icon>assignment_ind</mat-icon>
       Formulaire Personne
+    </button>
+    <button [routerLink]="['/form-val-email']" aria-label="Formulaire email" mat-raised-button
+            routerLinkActive="mat-accent">
+      <mat-icon>email</mat-icon>
+      Formulaire Email
     </button>
     <button [routerLink]="['/register']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
       <mat-icon>account_circle</mat-icon>
@@ -32,7 +38,7 @@
       Liste
     </button>
     <button [routerLink]="['/hello']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
-      <mat-icon>http</mat-icon>
+      <mat-icon>list</mat-icon>
       Hello
     </button>
   </mat-toolbar>

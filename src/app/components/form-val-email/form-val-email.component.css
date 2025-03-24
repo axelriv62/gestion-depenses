@@ -1,0 +1,33 @@
+.container {
+  height: 80vh;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.ligne {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 1rem;
+  font-size: x-large
+}
+
+.p-col {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 150px;
+  padding: 1rem;
+  font-size: medium
+}
+
+.ok {
+  border: green solid 2px;
+}
+
+.erreur {
+  border: red solid 2px;
+}

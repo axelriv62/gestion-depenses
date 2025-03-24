@@ -1,7 +1,7 @@
 <div>
-  <p>Nom : {{ getPersonne().nom }} </p>
-  <p>Prénom : {{ getPersonne().prenom }}</p>
-  <p>Plafond : {{ getPersonne().plafond }}</p>
+  <p>Nom : {{ personne.nom }} </p>
+  <p>Prénom : {{ personne.prenom }}</p>
+  <p>Plafond : {{ personne.plafond }}</p>
 </div>
 <button (click)="getDepensesOfPersonneId(0)">Trier par date</button>
 <button (click)="getDepensesOfPersonneId(1)">Trier par montant (décroissant)</button>
@@ -12,7 +12,7 @@
     <option value="{{ nature }}">{{ nature }}</option>
   }
 </select>
-<table [dataSource]="depenses" mat-table>
+<table [dataSource]="depenses()" mat-table>
   <ng-container matColumnDef="id">
     <th *matHeaderCellDef mat-header-cell>ID</th>
     <td *matCellDef="let depense" mat-cell>{{ depense.id }}</td>
