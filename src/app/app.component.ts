@@ -10,6 +10,7 @@ import {MatButton} from '@angular/material/button';
   selector: 'app-root',
   imports: [RouterOutlet, ShowMessagesComponent, MatToolbar, MatIcon, RouterLink, MatButton, RouterLinkActive],
   templateUrl: './app.component.html',
+  standalone: true,
   styleUrl: './app.component.css'
 })
 export class AppComponent {

@@ -31,6 +31,7 @@ import {noop, Subscription} from 'rxjs';
     NgClass,
   ],
   templateUrl: './personnes-liste.component.html',
+  standalone: true,
   styleUrl: './personnes-liste.component.css'
 })
 export class PersonnesListeComponent implements OnInit, OnDestroy {
