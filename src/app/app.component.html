@@ -13,6 +13,14 @@
       <mat-icon>assignment_ind</mat-icon>
       Formulaire Personne
     </button>
+    <button [routerLink]="['/register']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+      <mat-icon>account_circle</mat-icon>
+      Enregistrement
+    </button>
+    <button [routerLink]="['/login']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+      <mat-icon>account_circle</mat-icon>
+      Connexion
+    </button>
     <span class="groupe-droit"></span>
     <button [queryParams]="{horsLimite:'true'}" [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button
             routerLinkActive="mat-accent">
@@ -24,7 +32,7 @@
       Liste
     </button>
     <button [routerLink]="['/hello']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
-      <mat-icon>list</mat-icon>
+      <mat-icon>http</mat-icon>
       Hello
     </button>
   </mat-toolbar>

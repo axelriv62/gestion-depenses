@@ -1,7 +1,7 @@
 import {computed, inject, Injectable, signal} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Router} from 'express';
 import {firstValueFrom} from 'rxjs';
+import {Router} from '@angular/router';
 import {
   ANONYMOUS_USER,
   getResponseLogin,
@@ -9,8 +9,8 @@ import {
   Identite,
   RegisterRequest,
   User
-} from './auth-interfaces';
-import {environment} from '../environments/environment';
+} from '../auth-interfaces';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,6 @@ export class AuthService {
   http = inject(HttpClient);
   router = inject(Router);
   readonly url = `${environment.apiURL}`;
-
   private readonly httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'}),
   };
