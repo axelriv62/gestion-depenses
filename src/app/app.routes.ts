@@ -6,6 +6,7 @@ import {PersonnesDetailsComponent} from './components/personnes-details/personne
 import {ExoAsynchroComponent} from './components/exo-asynchro/exo-asynchro.component';
 import {IntroFormulaireComponent} from './components/intro-formulaire/intro-formulaire.component';
 import {PersonneFormComponent} from './components/personne-form/personne-form.component';
+import {FormValEmailComponent} from './components/form-val-email/form-val-email.component';
 
 
 export const routes: Routes = [
@@ -16,5 +17,6 @@ export const routes: Routes = [
   {path: 'hello', component: ExoAsynchroComponent},
   {path: 'formulaire', component: IntroFormulaireComponent},
   {path: 'personne-form', component: PersonneFormComponent},
+  {path: 'form-val-email', component: FormValEmailComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
