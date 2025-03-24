@@ -5,38 +5,62 @@
       <mat-icon>home</mat-icon>
       Accueil
     </button>
+
     <button [routerLink]="['/formulaire']" aria-label="Formulaire" mat-raised-button routerLinkActive="mat-accent">
       <mat-icon>list_alt</mat-icon>
       Formulaire
     </button>
+
     <button [routerLink]="['/personne-form']" aria-label="Formulaire personnes" mat-raised-button
             routerLinkActive="mat-accent">
       <mat-icon>assignment_ind</mat-icon>
       Formulaire Personne
     </button>
+
     <button [routerLink]="['/form-val-email']" aria-label="Formulaire email" mat-raised-button
             routerLinkActive="mat-accent">
       <mat-icon>email</mat-icon>
       Formulaire Email
     </button>
-    <button [routerLink]="['/register']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
-      <mat-icon>account_circle</mat-icon>
-      Enregistrement
-    </button>
-    <button [routerLink]="['/login']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
-      <mat-icon>account_circle</mat-icon>
-      Connexion
-    </button>
+
+    @if (auth.isLoggedIn()) {
+      <button (click)="auth.logout()" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+        <mat-icon>account_circle</mat-icon>
+        Déconnexion
+      </button>
+
+      <button [routerLink]="['/me']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+        <mat-icon>account_circle</mat-icon>
+        Profil
+      </button>
+    } @else {
+      <button [routerLink]="['/register']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+        <mat-icon>account_circle</mat-icon>
+        Enregistrement
+      </button>
+
+      <button [routerLink]="['/login']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+        <mat-icon>account_circle</mat-icon>
+        Connexion
+      </button>
+
+    }
+
     <span class="groupe-droit"></span>
-    <button [queryParams]="{horsLimite:'true'}" [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button
-            routerLinkActive="mat-accent">
-      <mat-icon>list</mat-icon>
-      Hors limite
-    </button>
-    <button [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
-      <mat-icon>list</mat-icon>
-      Liste
-    </button>
+
+    @if (auth.isLoggedIn()) {
+      <button [queryParams]="{horsLimite:'true'}" [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button
+              routerLinkActive="mat-accent">
+        <mat-icon>list</mat-icon>
+        Liste Hors limite
+      </button>
+
+      <button [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+        <mat-icon>list</mat-icon>
+        Liste
+      </button>
+    }
+
     <button [routerLink]="['/hello']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
       <mat-icon>list</mat-icon>
       Hello
