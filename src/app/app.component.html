@@ -5,13 +5,19 @@
       <mat-icon>home</mat-icon>
       Accueil
     </button>
-    <button [routerLink]="['/formulaire']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+    <button [routerLink]="['/formulaire']" aria-label="Formulaire" mat-raised-button routerLinkActive="mat-accent">
       <mat-icon>list_alt</mat-icon>
       Formulaire
     </button>
-    <button [routerLink]="['/personne-form']" aria-label="List icon" mat-raised-button routerLinkActive="mat-accent">
+    <button [routerLink]="['/personne-form']" aria-label="Formulaire personnes" mat-raised-button
+            routerLinkActive="mat-accent">
       <mat-icon>assignment_ind</mat-icon>
       Formulaire Personne
+    </button>
+    <button [routerLink]="['/form-val-email']" aria-label="Formulaire email" mat-raised-button
+            routerLinkActive="mat-accent">
+      <mat-icon>email</mat-icon>
+      Formulaire Email
     </button>
     <span class="groupe-droit"></span>
     <button [queryParams]="{horsLimite:'true'}" [routerLink]="['/personnes']" aria-label="List icon" mat-raised-button
