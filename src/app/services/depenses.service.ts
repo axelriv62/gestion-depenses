@@ -18,7 +18,7 @@ export class DepensesService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
   }
 
   async getDepensesOfPersonneId(id: number, sort: number): Promise<Depense[]> {
@@ -31,16 +31,14 @@ export class DepensesService {
       return response.data.depenses.sort((a, b) => b.montant - a.montant);
     } else if (sort === 2) {
       return response.data.depenses.sort((a, b) => a.nature.localeCompare(b.nature) || b.montant - a.montant);
-    } else {
-      return response.data.depenses;
     }
+    return response.data.depenses;
   }
 
   async filtreDepenses(id: number, nature: string): Promise<Depense[]> {
     if (nature !== '') {
       return (await this.getDepensesOfPersonneId(id, 0)).filter(depense => depense.nature === nature);
-    } else {
-      return this.getDepensesOfPersonneId(id, 0);
     }
+    return this.getDepensesOfPersonneId(id, 0);
   }
 }
