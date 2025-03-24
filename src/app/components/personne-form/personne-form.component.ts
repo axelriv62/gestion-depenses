@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {JsonPipe} from '@angular/common';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 interface Specialite {
   valeur: string;
@@ -22,7 +23,9 @@ interface Specialite {
     MatLabel,
     JsonPipe,
     MatInput,
-    MatButton
+    MatButton,
+    MatExpansionModule,
+    MatError
   ],
   templateUrl: './personne-form.component.html',
   styleUrl: './personne-form.component.css'
