@@ -1,34 +1,44 @@
 import {Injectable} from '@angular/core';
 import {Depense} from '../depense';
-import {PersonnesService} from './personnes.service';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {firstValueFrom} from 'rxjs';
+
+export type GetDepensesResponse = {
+  data: {
+    depenses: Depense[];
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepensesService {
-  depenses: Depense[] = [];
+  readonly url = 'http://localhost:8000/api';
+  readonly httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
 
-  constructor(private readonly personnesService: PersonnesService) {
-    this.personnesService.getPersonnes(0).forEach(p => this.depenses.push(...p.depenses));
+  constructor(private readonly http: HttpClient) {
   }
 
-  getDepensesOfPersonneId(id: number, sort?: number): Depense[] {
-    let depenses = this.depenses.filter(depense => depense.idPersonne === id);
+  async getDepensesOfPersonneId(id: number, sort: number): Promise<Depense[]> {
+    const depenses$ = this.http.get<GetDepensesResponse>(`${this.url}/depenses/personne/${id}`, this.httpOptions);
+    const response = await firstValueFrom(depenses$);
+
     if (sort === 0) {
-      return depenses.sort((a, b) => a.dd.getTime() - b.dd.getTime());
+      return response.data.depenses.sort((a, b) => new Date(a.dd).getTime() - new Date(b.dd).getTime());
     } else if (sort === 1) {
-      return depenses.sort((a, b) => b.montant - a.montant);
+      return response.data.depenses.sort((a, b) => b.montant - a.montant);
     } else if (sort === 2) {
-      return depenses.sort((a, b) => a.nature.localeCompare(b.nature) || b.montant - a.montant);
-    } else {
-      return depenses;
+      return response.data.depenses.sort((a, b) => a.nature.localeCompare(b.nature) || b.montant - a.montant);
     }
+    return response.data.depenses;
   }
 
-  filtreDepenses(id: number, nature: string): Depense[] {
+  async filtreDepenses(id: number, nature: string): Promise<Depense[]> {
     if (nature !== '') {
-      return this.getDepensesOfPersonneId(id).filter(depense => depense.nature === nature);
+      return (await this.getDepensesOfPersonneId(id, 0)).filter(depense => depense.nature === nature);
     }
-    return this.getDepensesOfPersonneId(id);
+    return this.getDepensesOfPersonneId(id, 0);
   }
 }

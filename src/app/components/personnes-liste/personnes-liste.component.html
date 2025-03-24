@@ -1,7 +1,7 @@
 <button (click)="getPersonnes(0)">Trier par ID</button>
 <button (click)="getPersonnes(1)">Trier par nom (A-Z)</button>
 <button (click)="getPersonnes(2)">Trier par Nom (Z-A)</button>
-<table [dataSource]="personnes" mat-table>
+<table [dataSource]="personnes()" mat-table>
   <ng-container matColumnDef="id">
     <th *matHeaderCellDef mat-header-cell>ID</th>
     <td *matCellDef="let personne" mat-cell>{{ personne.id }}</td>
@@ -20,8 +20,8 @@
   </ng-container>
   <ng-container matColumnDef="depenses">
     <th *matHeaderCellDef mat-header-cell>Dépenses</th>
-    <td *matCellDef="let personne" [ngClass]="{'rouge': isOverPlafond(personne)}"
-        mat-cell>{{ getTotalDepenses(personne) }}
+    <td *matCellDef="let personne" [ngClass]="{'rouge': isOverPlafondCache[personne.id]}"
+        mat-cell>{{ totalDepensesCache[personne.id] }}
     </td>
   </ng-container>
   <ng-container matColumnDef="details">
@@ -33,5 +33,4 @@
 
   <tr *matHeaderRowDef="columns" mat-header-row></tr>
   <tr *matRowDef="let row; columns: columns;" mat-row></tr>
-
 </table>

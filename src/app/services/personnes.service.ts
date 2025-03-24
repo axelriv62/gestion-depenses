@@ -1,36 +1,57 @@
 import {Injectable} from '@angular/core';
 import {Personne} from '../personne';
-import {Datas} from '../mock-datas';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {MessagesService} from './messages.service';
+import {firstValueFrom} from 'rxjs';
+import {DepensesService} from './depenses.service';
+
+export type GetPersonnesResponse = {
+  data: {
+    personnes: Personne[];
+  }
+}
+
+export type GetPersonneResponse = {
+  data: {
+    personne: Personne;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonnesService {
-  personnes: Personne[];
+  readonly url = 'http://localhost:8000/api';
+  readonly httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'})
+  };
 
-  constructor() {
-    const datas = Datas.getInstance();
-    this.personnes = datas.generePersonnes();
+  constructor(private http: HttpClient, private messageService: MessagesService, private depensesService: DepensesService) {
   }
 
-  getPersonnes(sort: number): Personne[] {
+  async getPersonnes(sort: number): Promise<Personne[]> {
+    const personnes$ = this.http.get<GetPersonnesResponse>(`${this.url}/personnes`, this.httpOptions);
+    const response = await firstValueFrom(personnes$);
+
     if (sort === 0) {
-      return this.personnes.sort((a, b) => a.id - b.id);
+      return response.data.personnes.sort((a, b) => a.id - b.id);
     } else if (sort === 1) {
-      return this.personnes.sort((a, b) => a.nom.localeCompare(b.nom));
+      return response.data.personnes.sort((a, b) => a.nom.localeCompare(b.nom));
     } else if (sort === 2) {
-      return this.personnes.sort((a, b) => b.nom.localeCompare(a.nom));
+      return response.data.personnes.sort((a, b) => b.nom.localeCompare(a.nom));
     } else {
-      return this.personnes;
+      return response.data.personnes;
     }
   }
 
-  totalDepenses(personne: Personne): number {
-    return personne.depenses.reduce((somme, depense) => somme + depense.montant, 0);
+  async totalDepenses(personne: Personne): Promise<number> {
+    const depenses = await this.depensesService.getDepensesOfPersonneId(personne.id, 0);
+    return depenses.reduce((acc, depense) => acc + depense.montant, 0);
   }
 
-  getPersonne(id: number): Personne {
-    return <Personne>this.personnes.find(personne => personne.id === id)
+  async getPersonne(id: number): Promise<Personne> {
+    const personne$ = this.http.get<GetPersonneResponse>(`${this.url}/personnes/${id}`, this.httpOptions);
+    const response = await firstValueFrom(personne$);
+    return response.data.personne;
   }
-
 }
