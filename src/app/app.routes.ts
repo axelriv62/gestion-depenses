@@ -9,6 +9,7 @@ import {PersonneFormComponent} from './components/personne-form/personne-form.co
 import {FormValEmailComponent} from './components/form-val-email/form-val-email.component';
 import {RegisterComponent} from './components/register/register.component';
 import {LoginComponent} from './components/login/login.component';
+import {ProfilComponent} from './components/profil/profil.component';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
@@ -21,5 +22,6 @@ export const routes: Routes = [
   {path: 'form-val-email', component: FormValEmailComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'me', component: ProfilComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
