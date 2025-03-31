@@ -62,3 +62,23 @@ export const ANONYMOUS_USER: User = <User>{
   admin: false,
   token: ''
 };
+
+export type GetResponseMe = {
+  "success": boolean,
+  "data": {
+    "personne": {
+      "id": number,
+      "nom": string,
+      "prenom": string,
+      "plafond": string,
+      "user": {
+        "id": number,
+        "name": string,
+        "email": string,
+        "admin": boolean,
+      },
+      "montantDepenses": number
+    }
+  },
+  "message": string
+}
