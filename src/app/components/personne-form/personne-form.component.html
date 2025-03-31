@@ -3,15 +3,23 @@
     <div class="p-formgroup-inline">
       <mat-form-field>
         <input formControlName="nom" matInput placeholder="Nom" type="text">
-        <mat-error *ngIf="nom?.errors?.['required'] && (nom?.dirty || nom?.touched)">
-          Le nom est obligatoire
-        </mat-error>
-        <mat-error *ngIf="nom?.errors?.['minlength']">
-          Le nom doit comporter au moins 6 caractères
-        </mat-error>
-        <mat-error *ngIf="nom?.errors?.['nomInvalid']">
-          Le nom ne doit contenir que des lettres
-        </mat-error>
+
+        @if (nom?.errors?.['required'] && (nom?.dirty || nom?.touched)) {
+          <mat-error>
+            Le nom est obligatoire
+          </mat-error>
+        }
+        @if (nom?.errors?.['minlength']) {
+          <mat-error>
+            Le nom doit comporter au moins 3 caractères
+          </mat-error>
+        }
+        @if (nom?.errors?.['nomInvalid']) {
+          <mat-error>
+            Le nom doit comporter uniquement des lettres
+          </mat-error>
+        }
+
       </mat-form-field>
       <mat-form-field>
         <input formControlName="prenom" matInput placeholder="Prénom" type="text">
@@ -24,9 +32,11 @@
       <mat-form-field>
         <mat-label>Spécialité</mat-label>
         <mat-select formControlName="specialite">
-          <mat-option *ngFor="let specialite of specialites" [value]="specialite.valeur">
-            {{ specialite.libelle }}
-          </mat-option>
+          @for (specialite of specialites; track specialite.valeur) {
+            <mat-option [value]="specialite.valeur">
+              {{ specialite.libelle }}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
@@ -37,4 +47,5 @@
   <div>
     valeurs : {{ formulaire.value | json }}
   </div>
+
 </div>
