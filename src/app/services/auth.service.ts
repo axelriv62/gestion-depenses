@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {
   ANONYMOUS_USER,
   getResponseLogin,
+  GetResponseMe,
   GetResponseRegister,
   Identite,
   RegisterRequest,
@@ -34,7 +35,7 @@ export class AuthService {
     const response = await firstValueFrom(response$);
     const user = <User>{...response.data.user, token: response.data.token};
     this.#userSignal.set(user);
-    console.log(user);
+    // console.log(user);
     return user;
   }
 
@@ -52,6 +53,13 @@ export class AuthService {
     const response$ = this.http.post<any>(`${this.url}/logout`, {}, this.httpOptions);
     await firstValueFrom(response$);
     this.#userSignal.set(ANONYMOUS_USER);
-    (await this.router.navigateByUrl('/'));
+    (await this.router.navigateByUrl("/"));
+  }
+
+  async me() {
+    const response$ = this.http.get<GetResponseMe>(`${this.url}/me`, this.httpOptions);
+    const response = await firstValueFrom(response$);
+    const personne = response.data.personne;
+    return personne;
   }
 }
