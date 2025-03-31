@@ -1,0 +1,63 @@
+<div>
+  <a [routerLink]="['../login']">Connexion</a>
+  <mat-card>
+    <mat-card-title>Enregistrement</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="register()" [formGroup]="form">
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="Email" type="email">
+          @if (email?.touched && email?.hasError('required')) {
+            <mat-error>
+              L'adresse mail est obligatoire
+            </mat-error>
+          }
+          @if (email?.touched && email?.hasError('email')) {
+            <mat-error>
+              Doit être une adresse mail valide
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="password" matInput placeholder="Password" type="password">
+          @if (password?.touched && password?.hasError('required')) {
+            <mat-error>
+              Le mot de passe est obligatoire
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="nom" matInput placeholder="Name" type="name">
+          @if (nom?.touched && nom?.hasError('required')) {
+            <mat-error>
+              Le nom est obligatoire
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="prenom" matInput placeholder="First name" type="first name">
+          @if (prenom?.touched && prenom?.hasError('required')) {
+            <mat-error>
+              Le prénom est obligatoire
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="plafond" matInput placeholder="Plafond" type="plafond">
+          @if (plafond?.touched && plafond?.hasError('required')) {
+            <mat-error>
+              Le plafond est obligatoire
+            </mat-error>
+          }
+        </mat-form-field>
+
+        <div class="button">
+          <button [disabled]="!form.valid" mat-button type="submit">Enregistrement</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
