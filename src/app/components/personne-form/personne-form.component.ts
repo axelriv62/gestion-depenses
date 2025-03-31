@@ -33,7 +33,7 @@ interface Specialite {
 })
 export class PersonneFormComponent {
   formulaire = new FormGroup({
-    nom: new FormControl('', [Validators.required, Validators.minLength(4), nomValide()]),
+    nom: new FormControl('', [Validators.required, Validators.minLength(3), nomValide()]),
     prenom: new FormControl(''),
     numeroTelCtrl: new FormControl(''),
     specialite: new FormControl('')
