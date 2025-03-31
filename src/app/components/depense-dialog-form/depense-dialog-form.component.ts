@@ -3,7 +3,7 @@ import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 
 import {MatButton} from "@angular/material/button";
-import {MatError, MatFormField} from "@angular/material/form-field";
+import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
@@ -31,7 +31,8 @@ export const NATURES = ['Autre', 'Alimentaire', 'Loisirs', 'Voiture', 'Habitat',
     MatSelect,
     MatOption,
     MatDialogActions,
-    MatButton
+    MatButton,
+    MatLabel
   ],
   providers: [
     provideNativeDateAdapter(),

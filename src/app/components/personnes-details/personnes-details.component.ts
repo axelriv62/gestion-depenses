@@ -1,4 +1,4 @@
-import {Component, signal, ViewChild} from '@angular/core';
+import {Component, inject, signal, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PersonnesService} from '../../services/personnes.service';
 import {DepensesService} from '../../services/depenses.service';
@@ -8,8 +8,6 @@ import {
   MatColumnDef,
   MatHeaderCell,
   MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
   MatRow,
   MatRowDef,
   MatTable,
@@ -18,6 +16,9 @@ import {
 import {Depense} from '../../depense';
 import {MessagesService} from '../../services/messages.service';
 import {Personne} from '../../personne';
+import {DepenseDialogFormComponent} from '../depense-dialog-form/depense-dialog-form.component';
+import {MatIcon} from '@angular/material/icon';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-personnes-details',
@@ -29,10 +30,9 @@ import {Personne} from '../../personne';
     MatCell,
     MatCellDef,
     MatHeaderCellDef,
-    MatHeaderRow,
-    MatHeaderRowDef,
     MatRow,
-    MatRowDef
+    MatRowDef,
+    MatIcon
   ],
   templateUrl: './personnes-details.component.html',
   styleUrl: './personnes-details.component.css'
@@ -40,13 +40,16 @@ import {Personne} from '../../personne';
 export class PersonnesDetailsComponent {
   @ViewChild(MatTable) table!: MatTable<Depense>
   id: number;
-  columns = ['id', 'dd', 'nature', 'libelle', 'montant'];
+  columns = ['id', 'dd', 'nature', 'libelle', 'montant', 'edit'];
   depenses = signal<Depense[]>([]);
   natures: string[] = ['Alimentaire', 'Loisirs', 'Voiture', 'Habitat', 'Sport', 'Vacances']
   personne!: Personne;
+  protected readonly onkeydown = onkeydown;
+  private dialog: any;
 
-  constructor(private route: ActivatedRoute, private personnesService: PersonnesService, private depensesService: DepensesService, private messagesService: MessagesService) {
-    this.id = +(this.route.snapshot.paramMap.get('id') || 1);
+  constructor(private readonly route: ActivatedRoute, private readonly personnesService: PersonnesService, private readonly depensesService: DepensesService, private readonly messagesService: MessagesService) {
+    this.id = +(this.route.snapshot.paramMap.get('id') ?? 1);
+    this.dialog = inject(MatDialog);
   }
 
   ngOnInit() {
@@ -90,6 +93,25 @@ export class PersonnesDetailsComponent {
     } catch (error) {
       this.messagesService.add("Erreur lors du filtrage des dépenses de la personne avec l'id " + this.id);
     }
+  }
+
+  async editDepense(id: number) {
+    await this.depensesService.getDepense(id);
+    let dialogRef = this.dialog.open(DepenseDialogFormComponent, {
+      maxWidth: '800px',
+      data: {
+        msg: `Modification d'une dépense de ${this.personne.prenom} ${this.personne.nom}`,
+        depense: this.depenses()
+      },
+    });
+    dialogRef.afterClosed().subscribe(async (result: Depense) => {
+      if (result) {
+        console.log(result);
+        const depense = await this.depensesService.updateDepense(result);
+        await this.getPersonne();
+        await this.getDepensesOfPersonneId(depense.idPersonne);
+      }
+    });
   }
 }
 

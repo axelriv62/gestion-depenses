@@ -41,4 +41,12 @@ export class DepensesService {
     }
     return this.getDepensesOfPersonneId(id, 0);
   }
+
+  async updateDepense(depense: Depense): Promise<Depense> {
+    return firstValueFrom(this.http.put<Depense>(`${this.url}/depenses/${depense.id}`, depense, this.httpOptions));
+  }
+
+  async getDepense(id: number) {
+    return firstValueFrom(this.http.get<GetDepensesResponse>(`${this.url}/depenses/${id}`, this.httpOptions));
+  }
 }

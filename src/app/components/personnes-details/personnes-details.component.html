@@ -33,8 +33,12 @@
     <th *matHeaderCellDef mat-header-cell>Montant</th>
     <td *matCellDef="let depense" mat-cell>{{ depense.montant }}</td>
   </ng-container>
-
-  <tr *matHeaderRowDef="columns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: columns;" mat-row></tr>
-
+  <ng-container matColumnDef="edit">
+    <th *matHeaderCellDef mat-header-cell>Action</th>
+    <td *matCellDef="let depense" mat-cell>
+      <mat-icon (click)="editDepense(depense.id)">edit</mat-icon>
+    </td>
+    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+  </ng-container>
 </table>
