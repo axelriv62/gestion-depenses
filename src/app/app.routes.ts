@@ -10,18 +10,19 @@ import {FormValEmailComponent} from './components/form-val-email/form-val-email.
 import {RegisterComponent} from './components/register/register.component';
 import {LoginComponent} from './components/login/login.component';
 import {ProfilComponent} from './components/profil/profil.component';
+import {accessControlGuard} from './services/access-control-guard.service';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
   {path: 'dashboard', component: DashboardComponent},
-  {path: 'personnes', component: PersonnesListeComponent},
-  {path: 'personnes/:id', component: PersonnesDetailsComponent},
+  {path: 'personnes', component: PersonnesListeComponent, canActivate: [accessControlGuard]},
+  {path: 'personnes/:id', component: PersonnesDetailsComponent, canActivate: [accessControlGuard]},
   {path: 'hello', component: ExoAsynchroComponent},
-  {path: 'formulaire', component: IntroFormulaireComponent},
-  {path: 'personne-form', component: PersonneFormComponent},
-  {path: 'form-val-email', component: FormValEmailComponent},
+  {path: 'formulaire', component: IntroFormulaireComponent, canActivate: [accessControlGuard]},
+  {path: 'personne-form', component: PersonneFormComponent, canActivate: [accessControlGuard]},
+  {path: 'form-val-email', component: FormValEmailComponent, canActivate: [accessControlGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'me', component: ProfilComponent},
+  {path: 'me', component: ProfilComponent, canActivate: [accessControlGuard]},
   {path: '**', component: PageNotFoundComponent}
 ];
