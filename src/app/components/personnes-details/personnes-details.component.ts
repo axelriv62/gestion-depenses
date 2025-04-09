@@ -19,6 +19,7 @@ import {Personne} from '../../personne';
 import {DepenseDialogFormComponent} from '../depense-dialog-form/depense-dialog-form.component';
 import {MatIcon} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
+import {noop} from 'rxjs';
 
 @Component({
   selector: 'app-personnes-details',
@@ -42,6 +43,7 @@ export class PersonnesDetailsComponent {
   id: number;
   columns = ['id', 'dd', 'nature', 'libelle', 'montant', 'edit'];
   depenses = signal<Depense[]>([]);
+  depense = signal<Depense | null>(null);
   natures: string[] = ['Alimentaire', 'Loisirs', 'Voiture', 'Habitat', 'Sport', 'Vacances']
   personne!: Personne;
   private dialog: any;
@@ -95,17 +97,17 @@ export class PersonnesDetailsComponent {
   }
 
   async loadDepenseOfId(id: number) {
-    let depense = await this.depensesService.getDepense(id)
-    console.log(depense.data.depenses)
+    const depense$ = await this.depensesService.getDepense(id)
+    this.depense.set(depense$.data.depense)
   }
 
   async editDepense(id: number) {
-    await this.loadDepenseOfId(id);
+    await this.loadDepenseOfId(id).then(noop);
     let dialogRef = this.dialog.open(DepenseDialogFormComponent, {
       maxWidth: '800px',
       data: {
         msg: `Modification d'une dépense de ${this.personne.prenom} ${this.personne.nom}`,
-        depense: this.depenses()
+        depense: this.depense()
       },
     });
     dialogRef.afterClosed().subscribe(async (result: Depense) => {
@@ -113,7 +115,7 @@ export class PersonnesDetailsComponent {
         console.log(result);
         const depense = await this.depensesService.updateDepense(result);
         await this.getPersonne();
-        await this.getDepensesOfPersonneId(depense.idPersonne);
+        await this.getDepensesOfPersonneId(depense.personneId);
       }
     });
   }

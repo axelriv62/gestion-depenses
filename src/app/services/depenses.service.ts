@@ -9,6 +9,12 @@ export type GetDepensesResponse = {
   }
 }
 
+export type DepenseResponse = {
+  data: {
+    depense: Depense;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,10 +49,18 @@ export class DepensesService {
   }
 
   async updateDepense(depense: Depense): Promise<Depense> {
-    return firstValueFrom(this.http.put<Depense>(`${this.url}/depenses/${depense.id}`, depense, this.httpOptions));
+    console.log("dépense :")
+    const depenseToUpdate = {
+      personne_id: depense.personneId.toString(),
+      libelle: depense.libelle,
+      montant: depense.montant,
+      dd: depense.dd.toISOString(),
+      nature: depense.nature,
+    };
+    return firstValueFrom(this.http.put<Depense>(`${this.url}/depenses/${depense.id}`, depenseToUpdate, this.httpOptions));
   }
 
   async getDepense(id: number) {
-    return firstValueFrom(this.http.get<Depense>(`${this.url}/depenses/${id}`, this.httpOptions));
+    return firstValueFrom(this.http.get<DepenseResponse>(`${this.url}/depenses/${id}`, this.httpOptions));
   }
 }
