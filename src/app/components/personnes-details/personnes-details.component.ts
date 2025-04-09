@@ -44,7 +44,6 @@ export class PersonnesDetailsComponent {
   depenses = signal<Depense[]>([]);
   natures: string[] = ['Alimentaire', 'Loisirs', 'Voiture', 'Habitat', 'Sport', 'Vacances']
   personne!: Personne;
-  protected readonly onkeydown = onkeydown;
   private dialog: any;
 
   constructor(private readonly route: ActivatedRoute, private readonly personnesService: PersonnesService, private readonly depensesService: DepensesService, private readonly messagesService: MessagesService) {
@@ -95,8 +94,13 @@ export class PersonnesDetailsComponent {
     }
   }
 
+  async loadDepenseOfId(id: number) {
+    let depense = await this.depensesService.getDepense(id)
+    console.log(depense.data.depenses)
+  }
+
   async editDepense(id: number) {
-    await this.depensesService.getDepense(id);
+    await this.loadDepenseOfId(id);
     let dialogRef = this.dialog.open(DepenseDialogFormComponent, {
       maxWidth: '800px',
       data: {

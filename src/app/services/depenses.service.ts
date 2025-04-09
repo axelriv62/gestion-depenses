@@ -47,6 +47,6 @@ export class DepensesService {
   }
 
   async getDepense(id: number) {
-    return firstValueFrom(this.http.get<GetDepensesResponse>(`${this.url}/depenses/${id}`, this.httpOptions));
+    return firstValueFrom(this.http.get<Depense>(`${this.url}/depenses/${id}`, this.httpOptions));
   }
 }
