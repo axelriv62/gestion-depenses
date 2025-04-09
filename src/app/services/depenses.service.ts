@@ -49,7 +49,6 @@ export class DepensesService {
   }
 
   async updateDepense(depense: Depense): Promise<Depense> {
-    console.log("dépense :")
     const depenseToUpdate = {
       personne_id: depense.personneId.toString(),
       libelle: depense.libelle,
@@ -62,5 +61,16 @@ export class DepensesService {
 
   async getDepense(id: number) {
     return firstValueFrom(this.http.get<DepenseResponse>(`${this.url}/depenses/${id}`, this.httpOptions));
+  }
+
+  async createDepense(depense: Depense) {
+    const depenseToAdd = {
+      personne_id: depense.personneId.toString(),
+      libelle: depense.libelle,
+      montant: depense.montant,
+      dd: depense.dd.toISOString(),
+      nature: depense.nature,
+    }
+    return firstValueFrom(this.http.post<Depense>(`${this.url}/depenses`, depenseToAdd, this.httpOptions));
   }
 }

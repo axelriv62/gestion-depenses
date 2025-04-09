@@ -46,7 +46,7 @@ export class PersonnesDetailsComponent {
   depense = signal<Depense | null>(null);
   natures: string[] = ['Alimentaire', 'Loisirs', 'Voiture', 'Habitat', 'Sport', 'Vacances']
   personne!: Personne;
-  private dialog: any;
+  private readonly dialog: any;
 
   constructor(private readonly route: ActivatedRoute, private readonly personnesService: PersonnesService, private readonly depensesService: DepensesService, private readonly messagesService: MessagesService) {
     this.id = +(this.route.snapshot.paramMap.get('id') ?? 1);
@@ -114,6 +114,25 @@ export class PersonnesDetailsComponent {
       if (result) {
         console.log(result);
         const depense = await this.depensesService.updateDepense(result);
+        await this.getPersonne();
+        await this.getDepensesOfPersonneId(depense.personneId);
+      }
+    });
+  }
+
+  async addDepense() {
+    let dialogRef = this.dialog.open(DepenseDialogFormComponent, {
+      maxWidth: '800px',
+      data: {
+        msg: `Modification d'une dépense de ${this.personne.prenom} ${this.personne.nom}`,
+        depense: this.depense()
+      },
+    });
+    dialogRef.afterClosed().subscribe(async (result: Depense) => {
+      if (result) {
+        console.log(result);
+        result.personneId = <number>this.depense()?.personneId
+        const depense = await this.depensesService.createDepense(result);
         await this.getPersonne();
         await this.getDepensesOfPersonneId(depense.personneId);
       }

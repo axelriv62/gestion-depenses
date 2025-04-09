@@ -6,6 +6,7 @@
 <button (click)="getDepensesOfPersonneId(0)">Trier par date</button>
 <button (click)="getDepensesOfPersonneId(1)">Trier par montant (décroissant)</button>
 <button (click)="getDepensesOfPersonneId(2)">Trier par nature et montant</button>
+<button (click)="addDepense()">Ajouter une dépense</button>
 <select (change)="filtreDepenses($event)">
   <option value="">Toutes les natures</option>
   @for (nature of natures; track nature) {
