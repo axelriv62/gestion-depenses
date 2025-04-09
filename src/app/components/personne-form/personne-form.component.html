@@ -3,6 +3,7 @@
     <div class="p-formgroup-inline">
       <mat-form-field>
         <input formControlName="nom" matInput placeholder="Nom" type="text">
+
         @if (nom?.errors?.['required'] && (nom?.dirty || nom?.touched)) {
           <mat-error>
             Le nom est obligatoire
@@ -10,9 +11,15 @@
         }
         @if (nom?.errors?.['minlength']) {
           <mat-error>
-            Le nom doit comporter au moins 6 caractères
+            Le nom doit comporter au moins 3 caractères
           </mat-error>
         }
+        @if (nom?.errors?.['nomInvalid']) {
+          <mat-error>
+            Le nom doit comporter uniquement des lettres
+          </mat-error>
+        }
+
       </mat-form-field>
       <mat-form-field>
         <input formControlName="prenom" matInput placeholder="Prénom" type="text">
