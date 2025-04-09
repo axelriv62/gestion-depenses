@@ -6,6 +6,7 @@ import {JsonPipe} from '@angular/common';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {nomValide} from '../../validators/nom-valide';
 
 interface Specialite {
   valeur: string;
@@ -32,7 +33,7 @@ interface Specialite {
 })
 export class PersonneFormComponent {
   formulaire = new FormGroup({
-    nom: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    nom: new FormControl('', [Validators.required, Validators.minLength(3), nomValide()]),
     prenom: new FormControl(''),
     numeroTelCtrl: new FormControl(''),
     specialite: new FormControl('')
