@@ -1,0 +1,46 @@
+<div>
+  <p>Nom : {{ personne.nom }} </p>
+  <p>Prénom : {{ personne.prenom }}</p>
+  <p>Plafond : {{ personne.plafond }}</p>
+</div>
+<button (click)="getDepensesOfPersonneId(0)">Trier par date</button>
+<button (click)="getDepensesOfPersonneId(1)">Trier par montant (décroissant)</button>
+<button (click)="getDepensesOfPersonneId(2)">Trier par nature et montant</button>
+<button (click)="addDepense()">Ajouter une dépense</button>
+<select (change)="filtreDepenses($event)">
+  <option value="">Toutes les natures</option>
+  @for (nature of natures; track nature) {
+    <option value="{{ nature }}">{{ nature }}</option>
+  }
+</select>
+<table [dataSource]="depenses()" mat-table>
+  <ng-container matColumnDef="id">
+    <th *matHeaderCellDef mat-header-cell>ID</th>
+    <td *matCellDef="let depense" mat-cell>{{ depense.id }}</td>
+  </ng-container>
+  <ng-container matColumnDef="dd">
+    <th *matHeaderCellDef mat-header-cell>Date</th>
+    <td *matCellDef="let depense" mat-cell>{{ depense.dd }}</td>
+  </ng-container>
+  <ng-container matColumnDef="nature">
+    <th *matHeaderCellDef mat-header-cell>Nature</th>
+    <td *matCellDef="let depense" mat-cell>{{ depense.nature }}</td>
+  </ng-container>
+  <ng-container matColumnDef="libelle">
+    <th *matHeaderCellDef mat-header-cell>Libelle</th>
+    <td *matCellDef="let depense" mat-cell>{{ depense.libelle }}</td>
+  </ng-container>
+  <ng-container matColumnDef="montant">
+    <th *matHeaderCellDef mat-header-cell>Montant</th>
+    <td *matCellDef="let depense" mat-cell>{{ depense.montant }}</td>
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <th *matHeaderCellDef mat-header-cell>Action</th>
+    <td *matCellDef="let depense" mat-cell>
+      <mat-icon (click)="editDepense(depense.id)">edit</mat-icon>
+      <mat-icon (click)="deleteDepense(depense.id)">delete</mat-icon>
+    </td>
+    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+  </ng-container>
+</table>

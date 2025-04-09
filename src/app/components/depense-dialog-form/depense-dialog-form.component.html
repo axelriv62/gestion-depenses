@@ -1,0 +1,52 @@
+<div>
+  <h2 class="dialog-title">{{ message }}</h2>
+  <mat-dialog-content>
+    <form [formGroup]="form">
+      <mat-form-field class="form-field">
+        <mat-label>Date de dépense</mat-label>
+        <input [matDatepicker]="picker" formControlName="dd" matInput>
+        <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      @if (dd?.errors?.['required'] && (dd?.dirty || dd?.touched)) {
+        <mat-error>
+          La date est obligatoire
+        </mat-error>
+      }
+      <mat-form-field class="form-field">
+        <mat-label>Libellé</mat-label>
+        <textarea formControlName="libelle" matInput placeholder="Libellé">
+                    {{libelle}}
+                </textarea>
+        @if (libelle?.errors?.['required'] && (libelle?.dirty || libelle?.touched)) {
+          <mat-error>
+            La libellé est obligatoire
+          </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Montant</mat-label>
+        <input formControlName="montant" matInput placeholder="Montant" type="numeric">
+        @if (montant?.errors?.['required'] && (montant?.dirty || montant?.touched)) {
+          <mat-error>
+            La montant est obligatoire
+          </mat-error>
+        }
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <mat-label>Spécialité</mat-label>
+        <mat-select formControlName="nature">
+          @for (nature of natures; track nature) {
+            <mat-option [value]="nature">
+              {{ nature }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button (click)="annule()" mat-button>Annule</button>
+    <button (click)="depense()" [disabled]="form.invalid" cdkFocusInitial mat-button>Ok</button>
+  </mat-dialog-actions>
+</div>
