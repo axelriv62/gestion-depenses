@@ -38,6 +38,7 @@
     <th *matHeaderCellDef mat-header-cell>Action</th>
     <td *matCellDef="let depense" mat-cell>
       <mat-icon (click)="editDepense(depense.id)">edit</mat-icon>
+      <mat-icon (click)="deleteDepense(depense.id)">delete</mat-icon>
     </td>
     <tr *matHeaderRowDef="columns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: columns;" mat-row></tr>

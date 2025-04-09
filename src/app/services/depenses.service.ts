@@ -73,4 +73,8 @@ export class DepensesService {
     }
     return firstValueFrom(this.http.post<Depense>(`${this.url}/depenses`, depenseToAdd, this.httpOptions));
   }
+
+  deleteDepense(id: number) {
+    return firstValueFrom(this.http.delete<Depense>(`${this.url}/depenses/${id}`, this.httpOptions))
+  }
 }

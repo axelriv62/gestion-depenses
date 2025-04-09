@@ -113,9 +113,9 @@ export class PersonnesDetailsComponent {
     dialogRef.afterClosed().subscribe(async (result: Depense) => {
       if (result) {
         console.log(result);
-        const depense = await this.depensesService.updateDepense(result);
+        await this.depensesService.updateDepense(result);
         await this.getPersonne();
-        await this.getDepensesOfPersonneId(depense.personneId);
+        await this.getDepensesOfPersonneId(0);
       }
     });
   }
@@ -132,11 +132,17 @@ export class PersonnesDetailsComponent {
       if (result) {
         console.log(result);
         result.personneId = <number>this.depense()?.personneId
-        const depense = await this.depensesService.createDepense(result);
+        await this.depensesService.createDepense(result);
         await this.getPersonne();
-        await this.getDepensesOfPersonneId(depense.personneId);
+        await this.getDepensesOfPersonneId(0);
       }
     });
+  }
+
+  async deleteDepense(id: number) {
+    await this.depensesService.deleteDepense(id)
+    await this.getPersonne()
+    await this.getDepensesOfPersonneId(0)
   }
 }
 
