@@ -9,6 +9,12 @@ export type GetDepensesResponse = {
   }
 }
 
+export type DepenseResponse = {
+  data: {
+    depense: Depense;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,5 +46,35 @@ export class DepensesService {
       return (await this.getDepensesOfPersonneId(id, 0)).filter(depense => depense.nature === nature);
     }
     return this.getDepensesOfPersonneId(id, 0);
+  }
+
+  async updateDepense(depense: Depense): Promise<Depense> {
+    const depenseToUpdate = {
+      personne_id: depense.personneId.toString(),
+      libelle: depense.libelle,
+      montant: depense.montant,
+      dd: depense.dd.toISOString(),
+      nature: depense.nature,
+    };
+    return firstValueFrom(this.http.put<Depense>(`${this.url}/depenses/${depense.id}`, depenseToUpdate, this.httpOptions));
+  }
+
+  async getDepense(id: number) {
+    return firstValueFrom(this.http.get<DepenseResponse>(`${this.url}/depenses/${id}`, this.httpOptions));
+  }
+
+  async createDepense(depense: Depense) {
+    const depenseToAdd = {
+      personne_id: depense.personneId.toString(),
+      libelle: depense.libelle,
+      montant: depense.montant,
+      dd: depense.dd.toISOString(),
+      nature: depense.nature,
+    }
+    return firstValueFrom(this.http.post<Depense>(`${this.url}/depenses`, depenseToAdd, this.httpOptions));
+  }
+
+  deleteDepense(id: number) {
+    return firstValueFrom(this.http.delete<Depense>(`${this.url}/depenses/${id}`, this.httpOptions))
   }
 }

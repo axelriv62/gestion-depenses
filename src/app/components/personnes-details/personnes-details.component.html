@@ -6,6 +6,7 @@
 <button (click)="getDepensesOfPersonneId(0)">Trier par date</button>
 <button (click)="getDepensesOfPersonneId(1)">Trier par montant (décroissant)</button>
 <button (click)="getDepensesOfPersonneId(2)">Trier par nature et montant</button>
+<button (click)="addDepense()">Ajouter une dépense</button>
 <select (change)="filtreDepenses($event)">
   <option value="">Toutes les natures</option>
   @for (nature of natures; track nature) {
@@ -33,8 +34,13 @@
     <th *matHeaderCellDef mat-header-cell>Montant</th>
     <td *matCellDef="let depense" mat-cell>{{ depense.montant }}</td>
   </ng-container>
-
-  <tr *matHeaderRowDef="columns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: columns;" mat-row></tr>
-
+  <ng-container matColumnDef="edit">
+    <th *matHeaderCellDef mat-header-cell>Action</th>
+    <td *matCellDef="let depense" mat-cell>
+      <mat-icon (click)="editDepense(depense.id)">edit</mat-icon>
+      <mat-icon (click)="deleteDepense(depense.id)">delete</mat-icon>
+    </td>
+    <tr *matHeaderRowDef="columns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: columns;" mat-row></tr>
+  </ng-container>
 </table>
