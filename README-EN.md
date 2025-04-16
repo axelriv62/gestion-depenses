@@ -2,7 +2,7 @@
   <br>
   <img src="public/logo.png" alt="logo" width="200">
   <br>
-  <b>Despenses Manager</b>
+  <b>Expense Manager</b>
   <br>
   <a href="README.md">
     <img src="https://img.shields.io/badge/README-FR-blue" alt="README-FR">
@@ -47,6 +47,8 @@ The main objective of this project is to create an expense management applicatio
 - Set up a connection between the fields of a form and the data of the component.
 - Implement data validation.
 
+<br>
+
 ## Get the project
 
 ```shell
@@ -86,6 +88,8 @@ pnpm install
 ng serve
 ```
 
-## Languages, tools, and softwares used
+<br>
+
+## Languages, tools, and software used
 
 ![My Skills](https://go-skill-icons.vercel.app/api/icons?i=angular,ts,html,css,json,git,gitlab&theme=dark)

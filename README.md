@@ -47,6 +47,8 @@ L'objectif principal de ce projet est de créer une application de gestion de d�
 - Mettre en relation les champs d’un formulaire avec les données du composant.
 - Mettre en place une validation des données.
 
+<br>
+
 ## Récupérer le projet
 
 ```shell
@@ -85,6 +87,8 @@ pnpm install
 # lancer le serveur Angular
 ng serve
 ```
+
+<br>
 
 ## Langages, outils et logiciels utilisés
 
